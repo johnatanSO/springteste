@@ -13,6 +13,8 @@ import br.com.springteste.models.Warning;
 
 @RestController
 public class WarningController {
+
+	Warning[] warnings; 
 	
 	@GetMapping("/warnings")
 	public ResponseEntity<String> getAllWarnings() {
@@ -27,8 +29,9 @@ public class WarningController {
 		String description = warning.description;
 
 		Warning newWarning = new Warning(title, description);
+		this.warnings[this.warnings.length] = newWarning;
 		System.out.printf("Advertência criada: { title: %s, description: %s }", newWarning.title, newWarning.description);
-		URI URINewWarning = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newWarning).toUri();
+		URI URINewWarning = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newWarning.getId()).toUri();
 
     return ResponseEntity.created(URINewWarning).build();
 	}
